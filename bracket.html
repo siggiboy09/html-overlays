@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #overlay {
+            opacity: 0;
+            transition: opacity 0.5s;
+
+            box-sizing: border-box;
+            position: absolute;
+            width: 1460px;
+            height: 65px;
+
+            background-color: #fff;
+            left: 100px;
+            top: 930px;
+        }
+
+        #_text {
+            box-sizing: border-box;
+            position: absolute;
+            width: 1460px;
+            height: 65px;
+
+            background-color: #fff;
+            left: 100px;
+            top: 930px;
+
+            font-family: Inter;
+            font-weight: 800;
+            font-size: 50px;
+            color: #000;
+            padding-left: 13px;
+            line-height: 65px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="overlay">
+        <div id="scoreboard">Default Titles</div>
+    </div>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+    <script>
+        let played = false
+        var response = [];
+        var publicSpreadsheetUrl = "https://docs.google.com/spreadsheets/d/1ZbjIgVgOUOoDuiN3U_cbxLxIxaUmh498cio6U7SPGxI/edit?usp=sharing";
+
+        function play() {
+            if (played) {
+                document.getElementById("overlay").style.opacity = 0;
+                played = false;
+            } else {
+                document.getElementById("overlay").style.opacity = 1;
+                tabletop_init();
+                played = true;
+            }
+        }
+
+        function update(incomingChange) {
+            const _text = document.getElementById('_text') // should be document.get...//
+            Object.entries(JSON.parse(incomingChange)).map(([key, value]) => {
+                if (key === '_text') {
+                    _text.innerText = value
+                }
+            })
+        }
+
+        function tabletop_init() {
+            Tabletop.init({
+                key: publicSpreadsheetUrl,
+                callback: showInfo,
+                simpleSheet: true
+            })
+        }
+
+        function showInfo(data, tabletop) {
+            console.log(data);
+        }
+
+    </script>
+    <script name="graphics-data-definition" type="application/json+gdd">
+    {
+        "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
+        "title": "",
+        "description": "",
+        "type": "object",
+            "properties": {
+              "_text": {
+                  "type": "string",
+                  "label": "Text",
+                  "description": "Text",
+                  "default": "COMING UP",
+                  "gddType": "single-line",
+                  "pattern": ""
+              }
+        }
+    }
+    </script>
+</body>
+
+</html>

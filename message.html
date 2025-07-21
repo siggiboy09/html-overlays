@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #overlay {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        #text1 {
+            box-sizing: border-box;
+            position: absolute;
+            width: auto;
+            height: 35px;
+
+            background-color: #000;
+            left: 100px;
+            top: 930px;
+
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 20px;
+            color: #fff;
+            padding-left: 13px;
+            padding-right: 13px;
+            line-height: 35px;
+        }
+
+        #text2 {
+            box-sizing: border-box;
+            position: absolute;
+            width: auto;
+            height: 65px;
+
+            background-color: #fff;
+            left: 100px;
+            top: 965px;
+
+            font-family: Inter;
+            font-weight: 800;
+            font-size: 50px;
+            color: #000;
+            padding-left: 13px;
+            padding-right: 13px;
+            line-height: 65px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="overlay">
+        <div id="text1">Eksempeltekst</div>
+        <div id="text2">Eksempeltekst</div>
+    </div>
+
+    <script>
+        let played = false
+
+        function play() {
+            if (played) {
+                document.getElementById("overlay").style.opacity = 0;
+                played = false;
+            } else {
+                document.getElementById("overlay").style.opacity = 1;
+                played = true;
+            }
+        }
+
+        function update(incomingChange) {
+            const text1 = document.getElementById('text1')
+            const text2 = document.getElementById('text2')
+            Object.entries(JSON.parse(incomingChange)).map(([key, value]) => {
+                if (key === 'text1') {
+                    text1.innerText = value
+                } else if (key === 'text2') {
+                    text2.innerText = value
+                }
+            })
+        }
+    </script>
+    <script name="graphics-data-definition" type="application/json+gdd">
+    {
+        "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
+        "title": "",
+        "description": "",
+        "type": "object",
+        "properties": {
+            "text1": {
+                "type": "string",
+                "label": "text1",
+                "description": "text1",
+                "default": "eksempeltekst",
+                "gddType": "single-line",
+                "pattern": ""
+            },
+            "text2": {
+                "type": "string",
+                "label": "text2",
+                "description": "text2",
+                "default": "eksempeltekst",
+                "gddType": "single-line",
+                "pattern": ""
+            }
+        }
+    }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lower Thirds</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #overlay {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        #title {
+            box-sizing: border-box;
+            position: absolute;
+            width: 1460px;
+            height: 65px;
+
+            background-color: #fff;
+            left: 100px;
+            top: 930px;
+
+            font-family: Inter;
+            font-weight: 800;
+            font-size: 50px;
+            color: #000;
+            padding-left: 13px;
+            line-height: 65px;
+        }
+
+        #scrolling_text {
+            box-sizing: border-box;
+            position: absolute;
+            width: 1460px;
+            height: 35px;
+
+            background-color: #000;
+            left: 100px;
+            top: 995px;
+
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 20px;
+            color: #fff;
+            padding-left: 13px;
+            padding-right: 13px;
+            line-height: 35px;
+
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .scrolling_wrapper {
+            display: flex;
+            width: max-content;
+            animation: scroll-left 15s linear infinite;
+        }
+
+        .scrolling_content {
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 20px;
+            color: #fff;
+            line-height: 35px;
+            white-space: nowrap;
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        #timer_text {
+            box-sizing: border-box;
+            position: absolute;
+            width: 250px;
+            height: 35px;
+
+            background-color: #fff;
+            left: 1570px;
+            top: 930px;
+
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 20px;
+            color: #000;
+            line-height: 35px;
+            text-align: center;
+        }
+
+        #timer {
+            box-sizing: border-box;
+            position: absolute;
+            width: 250px;
+            height: 65px;
+
+            background-color: #000;
+            left: 1570px;
+            top: 965px;
+
+            font-family: Inter;
+            font-weight: 800;
+            font-size: 50px;
+            color: #fff;
+            line-height: 65px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="overlay">
+        <div id="title">eksempeltekst</div>
+        <div id="scrolling_text">
+            <div class="scrolling_wrapper">
+                <div class="scrolling_content" id="scrolling_content_1">
+                    eksempeltekst
+                </div>
+                <div class="scrolling_content" id="scrolling_content_2">
+                    eksempeltekst
+                </div>
+            </div>
+        </div>
+        <div id="timer_text">NESTE KAMP OM</div>
+        <div id="timer">10:00</div>
+    </div>
+
+    <script>
+        let played = false
+
+        let minutes = 10
+
+        let timeInSeconds = minutes * 60;
+        const timerElement = document.getElementById('timer');
+
+        function play() {
+            if (played) {
+                document.getElementById("overlay").style.opacity = 0;
+                played = false;
+            } else {
+                document.getElementById("overlay").style.opacity = 1;
+                played = true;
+                var x = setInterval(function () {
+                    const minutes = Math.floor(timeInSeconds / 60);
+                    let seconds = timeInSeconds % 60;
+
+                    
+
+                    // Add leading zero to seconds if less than 10
+                    if (seconds < 10) {
+                        seconds = '0' + seconds;
+                    }
+
+                    // Update the display
+                    timerElement.textContent = `${minutes}:${seconds}`;
+
+                    // Decrement the time
+                    timeInSeconds--;
+
+                    // Stop the timer when it reaches 0
+                    if (timeInSeconds < 0) {
+                        clearInterval(x);
+                        timerElement.textContent = '0:00'; // Display 00:00 when expired
+                    }
+                }, 1000)
+            }
+        }
+
+        function update(incomingChange) {
+            const title = document.getElementById('title')
+            const scroll1 = document.getElementById('scrolling_content_1')
+            const scroll2 = document.getElementById('scrolling_content_2')
+            const timer_text = document.getElementById('timer_text')
+
+            Object.entries(JSON.parse(incomingChange)).map(([key, value]) => {
+                if (key === 'title') {
+                    title.innerText = value
+                } else if (key === 'scrolling_text') {
+                    scroll1.innerText = value
+                    scroll2.innerText = value
+                } else if (key === 'timer_text') {
+                    timer_text.innerText = value
+                }
+            })
+        }
+    </script>
+    <script name="graphics-data-definition" type="application/json+gdd">
+    {
+        "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
+        "title": "",
+        "description": "",
+        "type": "object",
+        "properties": {
+            "title": {
+                "type": "string",
+                "label": "Title",
+                "description": "Title",
+                "default": "eksempeltekst",
+                "gddType": "single-line",
+                "pattern": ""
+            },
+            "scrolling_text": {
+                "type": "string",
+                "label": "scrolling_text",
+                "description": "scrolling_text",
+                "default": "eksempeltekst",
+                "gddType": "single-line",
+                "pattern": ""
+            },
+            "timer_text": {
+                "type": "string",
+                "label": "timer_text",
+                "description": "timer_text",
+                "default": "NESTE KAMP OM",
+                "gddType": "single-line",
+                "pattern": ""
+            }
+        }
+
+    }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #overlay {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        #_text {
+            box-sizing: border-box;
+            position: absolute;
+            width: 1460px;
+            height: 65px;
+
+            background-color: #fff;
+            left: 100px;
+            top: 930px;
+
+            font-family: Inter;
+            font-weight: 800;
+            font-size: 50px;
+            color: #000;
+            padding-left: 13px;
+            line-height: 65px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="overlay">
+        <div id="_text">Default Titles</div>
+    </div>
+
+    <script>
+        let played = false
+
+        function play() {
+            if (played) {
+                document.getElementById("overlay").style.opacity = 0;
+                played = false;
+            } else {
+                document.getElementById("overlay").style.opacity = 1;
+                played = true;
+            }
+        }
+
+        function update(incomingChange) {
+            const _text = document.getElementById('_text')
+            Object.entries(JSON.parse(incomingChange)).map(([key, value]) => {
+                if (key === '_text') {
+                    _text.innerText = value
+                }
+            })
+        }
+    </script>
+    <script name="graphics-data-definition" type="application/json+gdd">
+    {
+        "$schema": "https://superflytv.github.io/GraphicsDataDefinition/gdd-meta-schema/v1/schema.json",
+        "title": "",
+        "description": "",
+        "type": "object",
+            "properties": {
+              "_text": {
+                  "type": "string",
+                  "label": "Text",
+                  "description": "Text",
+                  "default": "COMING UP",
+                  "gddType": "single-line",
+                  "pattern": ""
+              }
+        }
+    }
+</script>
+</body>
+
+</html>
