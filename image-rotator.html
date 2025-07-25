@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Slideshow Overlay</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: black;
+        }
+
+        #slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #slideshow img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* or 'contain' depending on your preference */
+            opacity: 0;
+            transform: scale(1);
+            transition:
+                opacity 1s ease-in-out,
+                transform 7s linear;
+        }
+
+        #slideshow img.active {
+            opacity: 1;
+            transform: scale(1.05);
+            /* slow zoom-in */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="slideshow"></div>
+    <script>
+        const imageFolder = 'images/';
+        const imageList = [
+            '1.png',
+            '2.png',
+        ];
+
+        let current = 0;
+        const slideshow = document.getElementById('slideshow');
+
+        const imgs = imageList.map(filename => {
+            const img = document.createElement('img');
+            img.src = imageFolder + filename;
+            slideshow.appendChild(img);
+            return img;
+        });
+
+        function showImage(index) {
+            imgs.forEach((img, i) => {
+                if (i === index) {
+                    img.classList.add("active");
+                } else {
+                    img.classList.remove("active");
+                }
+            });
+        }
+
+
+        showImage(current);
+
+        setInterval(() => {
+            current = (current + 1) % imgs.length;
+            showImage(current);
+        }, 7000); // 5s per image
+
+    </script>
+</body>
+
+</html>
