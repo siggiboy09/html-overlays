@@ -14,26 +14,84 @@
         }
 
         #overlay {
-            opacity: 0;
+            opacity: 1;
             transition: opacity 0.5s;
         }
         
-        #_text {
+        #commentator1 {
             box-sizing: border-box;
             position: absolute;
-            width: 1460px;
+            width: auto;
             height: 65px;
 
             background-color: #ffac11;
             left: 100px;
-            top: 930px;
+            top: 965px;
 
             font-family: Inter;
             font-weight: 800;
             font-size: 50px;
             color: #000;
             padding-left: 13px;
+            padding-right: 13px;
             line-height: 65px;
+        }
+
+        #commentator1_gamertag {
+            box-sizing: border-box;
+            position: absolute;
+            width: auto;
+            height: 35px;
+
+            background-color: #000;
+            left: 100px;
+            top: 930px;
+
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 20px;
+            color: #fff;
+            padding-left: 13px;
+            padding-right: 13px;
+            line-height: 35px;
+        }
+
+        #commentator2 {
+            box-sizing: border-box;
+            position: absolute;
+            width: auto;
+            height: 65px;
+
+            background-color: #ffac11;
+            right: 100px;
+            top: 965px;
+
+            font-family: Inter;
+            font-weight: 800;
+            font-size: 50px;
+            color: #000;
+            padding-left: 13px;
+            padding-right: 13px;
+            line-height: 65px;
+        }
+
+        #commentator2_gamertag {
+            box-sizing: border-box;
+            position: absolute;
+            width: auto;
+            height: 35px;
+
+            background-color: #000;
+            right: 100px;
+            top: 930px;
+
+            font-family: Inter;
+            font-weight: 600;
+            font-size: 20px;
+            color: #fff;
+            padding-left: 13px;
+            padding-right: 13px;
+            line-height: 35px;
         }
 
     </style>
@@ -41,7 +99,10 @@
 
 <body>
     <div id="overlay">
-        <div id="_text">Default Titles</div>
+        <div id="commentator1">Name</div>
+        <div id="commentator1_gamertag">Name</div>
+        <div id="commentator2">Name</div>
+        <div id="commentator2_gamertag">Name</div>
     </div>
 
     <script>
