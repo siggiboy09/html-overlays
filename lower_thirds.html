@@ -135,7 +135,7 @@
             </div>
         </div>
         <div id="timer_text">NESTE KAMP OM</div>
-        <div id="timer">10:00</div>
+        <div id="timer">0:00</div>
     </div>
 
     <script>
@@ -143,9 +143,9 @@
 
         let minutes = 10
 
-        let timeInSeconds = minutes * 60;
         const timerElement = document.getElementById('timer');
-
+        
+        let timeInSeconds = minutes * 60;
         function play() {
             if (played) {
                 document.getElementById("overlay").style.opacity = 0;
@@ -184,7 +184,10 @@
             const scroll1 = document.getElementById('scrolling_content_1')
             const scroll2 = document.getElementById('scrolling_content_2')
             const timer_text = document.getElementById('timer_text')
+            const timerElement = document.getElementById('timer')
 
+
+            // Parse the incoming change and update the elements accordingly
             Object.entries(JSON.parse(incomingChange)).map(([key, value]) => {
                 if (key === 'title') {
                     title.innerText = value
@@ -193,6 +196,9 @@
                     scroll2.innerText = value
                 } else if (key === 'timer_text') {
                     timer_text.innerText = value
+                } else if (key === 'timer') {
+                    minutes = parseInt(value);
+                    timeInSeconds = minutes * 60;
                 }
             })
         }
@@ -225,6 +231,14 @@
                 "label": "timer_text",
                 "description": "timer_text",
                 "default": "NESTE KAMP OM",
+                "gddType": "single-line",
+                "pattern": ""
+            },
+            "minutes": {
+                "type": "string",
+                "label": "minutter",
+                "description": "minutter",
+                "default": "10",
                 "gddType": "single-line",
                 "pattern": ""
             }
