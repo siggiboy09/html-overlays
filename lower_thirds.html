@@ -180,25 +180,38 @@
         }
 
         function update(incomingChange) {
-            const title = document.getElementById('title')
-            const scroll1 = document.getElementById('scrolling_content_1')
-            const scroll2 = document.getElementById('scrolling_content_2')
-            const timer_text = document.getElementById('timer_text')
-            const timerElement = document.getElementById('timer')
+            const title = document.getElementById('title');
+            const scrolling_text = document.getElementById('scrolling_text');
+            const scroll1 = document.getElementById('scrolling_content_1');
+            const scroll2 = document.getElementById('scrolling_content_2');
+            const timer_text = document.getElementById('timer_text');
+            const timer_element = document.getElementById('timer');
 
 
             // Parse the incoming change and update the elements accordingly
             Object.entries(JSON.parse(incomingChange)).map(([key, value]) => {
                 if (key === 'title') {
-                    title.innerText = value
+                    title.innerText = value;
                 } else if (key === 'scrolling_text') {
-                    scroll1.innerText = value
-                    scroll2.innerText = value
+                    scroll1.innerText = value;
+                    scroll2.innerText = value;
                 } else if (key === 'timer_text') {
-                    timer_text.innerText = value
+                    timer_text.innerText = value;
                 } else if (key === 'timer') {
                     minutes = parseInt(value);
                     timeInSeconds = minutes * 60;
+                } else if (key === 'timer_visibility') {
+                    if (parseInt(value) == 1) {
+                        timer_text.style.opacity = "1";
+                        timer_element.style.opacity = "1";
+                        title.style.width = "1460px";
+                        scrolling_text.style.width = "1460px";
+                    } else {
+                        timer_text.style.opacity = "0";
+                        timer_element.style.opacity = "0";
+                        title.style.width = "1720px";
+                        scrolling_text.style.width = "1720px";
+                    }
                 }
             })
         }
@@ -239,6 +252,14 @@
                 "label": "minutter",
                 "description": "minutter",
                 "default": "10",
+                "gddType": "single-line",
+                "pattern": ""
+            },
+            "timer_visibility": {
+                "type": "string",
+                "label": "timer visibility",
+                "description": "timer visibility",
+                "default": "1",
                 "gddType": "single-line",
                 "pattern": ""
             }
