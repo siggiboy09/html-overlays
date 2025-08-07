@@ -119,10 +119,19 @@
         }
 
         function update(incomingChange) {
-            const _text = document.getElementById('_text')
+            const name1 = document.getElementById('commentator1');
+            const gametag1 = document.getElementById('commentator1_gamertag');
+            const name2 = document.getElementById('commentator2');
+            const gametag2 = document.getElementById('commentator2_gamertag');
             Object.entries(JSON.parse(incomingChange)).map(([key, value]) => {
-                if (key === '_text') {
-                    _text.innerText = value
+                if (key === 'name1') {
+                    name1.innerText = value
+                } else if (key === 'gamertag1') {
+                    gametag1.innerText = value
+                } else if (key === 'name2') {
+                    name2.innerText = value
+                } else if (key === 'gamertag2') {
+                    gametag2.innerText = value
                 }
             })
         }
@@ -134,11 +143,35 @@
         "description": "",
         "type": "object",
         "properties": {
-            "_text": {
+            "name1": {
                 "type": "string",
-                "label": "Text",
-                "description": "Text",
-                "default": "COMING UP",
+                "label": "name1",
+                "description": "text",
+                "default": "name",
+                "gddType": "single-line",
+                "pattern": ""
+            },
+            "gamertag1": {
+                "type": "string",
+                "label": "gamertag1",
+                "description": "text",
+                "default": "name",
+                "gddType": "single-line",
+                "pattern": ""
+            },
+            "name2": {
+                "type": "string",
+                "label": "name2",
+                "description": "text",
+                "default": "name",
+                "gddType": "single-line",
+                "pattern": ""
+            },
+            "gamertag2": {
+                "type": "string",
+                "label": "gamertag2",
+                "description": "text",
+                "default": "name",
                 "gddType": "single-line",
                 "pattern": ""
             }
